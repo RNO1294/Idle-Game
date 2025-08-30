@@ -43,22 +43,29 @@
   <button id="restButton">Rest</button>
   <p id="energyDisplay">Energy: 0</p>
 
-  <script>
-    let energy = 0;
+<script>
+  let energy = 0;
+  let energyMax = 10; // You can change this later to scale difficulty or progression
 
-    function updateDisplay() {
-      document.getElementById("energyDisplay").textContent = "Energy: " + energy;
-    }
+  function updateDisplay() {
+    document.getElementById("energyDisplay").textContent = `Energy: ${energy} / ${energyMax}`;
+  }
 
-    function gainEnergy() {
+  function gainEnergy() {
+    if (energy < energyMax) {
       energy += 1;
       updateDisplay();
+    } else {
+      // Optional: give feedback when energy is full
+      console.log("Energy is full!");
     }
+  }
 
-    document.addEventListener("DOMContentLoaded", () => {
-      document.getElementById("restButton").addEventListener("click", gainEnergy);
-      updateDisplay();
-    });
-  </script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("restButton").addEventListener("click", gainEnergy);
+    updateDisplay();
+  });
+</script>
+
 </body>
 </html>
