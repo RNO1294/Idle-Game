@@ -1,5 +1,5 @@
-let mana = 0;
-function gainMana() {
-  mana += 1;
-  document.getElementById("manaDisplay").textContent = "Mana: " + mana;
+let energy = 0;
+function gainEnergy() {
+  energy += 1;
+  document.getElementById("energyDisplay").textContent = "Energy: " + energy;
 }
