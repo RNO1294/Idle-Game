@@ -1,13 +1,46 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Idle Game</title>
   <meta charset="UTF-8" />
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to Idle Game</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    h1 {
+      margin-bottom: 20px;
+      color: #90caf9;
+    }
+    button {
+      background-color: #1e1e1e;
+      color: #ffffff;
+      border: 2px solid #90caf9;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+    button:hover {
+      background-color: #263238;
+    }
+    p {
+      font-size: 18px;
+    }
+  </style>
 </head>
 <body>
   <h1>Welcome to Idle Game</h1>
-  <button onclick="gainEnergy()">Rest</button>
+  <button onclick="gainEnergy()">Channel Energy</button>
   <p id="energyDisplay">Energy: 0</p>
   <script src="game.js"></script>
 </body>
