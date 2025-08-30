@@ -43,6 +43,23 @@
   <button id="restButton">Rest</button>
   <p id="energyDisplay">Energy: 0</p>
 
-  <script src="game.js"></script>
+  <script>
+    let energy = 0;
+
+    function updateDisplay() {
+      document.getElementById("energyDisplay").textContent = "Energy: " + energy;
+    }
+
+    function gainEnergy() {
+      energy += 1;
+      updateDisplay();
+    }
+
+    // Attach event listener after DOM is ready
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("restButton").addEventListener("click", gainEnergy);
+      updateDisplay(); // Initialize display
+    });
+  </script>
 </body>
 </html>
