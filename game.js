@@ -106,11 +106,11 @@ function startAutoRefresh() {
   }, 1000);
 }
 
-checkbox.addEventListener("change", () => {
-  localStorage.setItem(refreshKey, checkbox.checked);
+autoRefreshCheckbox.addEventListener("change", () => {
+  localStorage.setItem(refreshKey, autoRefreshCheckbox.checked);
   countdown = 30;
   updateCountdown();
-});}
+});
 
 function resetResources() {
   energy = 0;
