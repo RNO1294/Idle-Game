@@ -34,6 +34,12 @@
       gap: 12px;
     }
 
+    #topRight {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
     #topPanel h1 {
       margin: 0;
       font-size: 20px;
@@ -48,14 +54,11 @@
     }
 
     #refreshToggle {
-      display: flex;
-      align-items: center;
       font-size: 12px;
       color: #b0bec5;
-    }
-
-    #refreshToggle input {
-      margin-right: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
     @media (max-width: 600px) {
@@ -142,12 +145,14 @@
   <div id="topPanel">
     <div id="topLeft">
       <h1>Welcome to Idle Game</h1>
-      <label id="refreshToggle">
-        <input type="checkbox" id="autoRefreshCheckbox" />
-        Auto-refresh
-      </label>
     </div>
-    <div id="versionTag">v1.0.0</div>
+    <div id="topRight">
+      <label id="refreshToggle">
+        Auto-refresh (<span id="refreshCountdown">30</span>)
+        <input type="checkbox" id="autoRefreshCheckbox" />
+      </label>
+      <div id="versionTag">v1.0.0</div>
+    </div>
   </div>
 
   <!-- Middle section with tabs -->
@@ -227,20 +232,36 @@
       });
     });
 
-    // Auto-refresh toggle logic
+    // Auto-refresh logic
     const checkbox = document.getElementById("autoRefreshCheckbox");
+    const countdownDisplay = document.getElementById("refreshCountdown");
     const refreshKey = "autoRefreshEnabled";
+    let countdown = 30;
+
+    function updateCountdown() {
+      countdownDisplay.textContent = countdown;
+    }
 
     function startAutoRefresh() {
+      updateCountdown();
       setInterval(() => {
         if (localStorage.getItem(refreshKey) === "true") {
-          location.reload(true);
+          countdown--;
+          updateCountdown();
+          if (countdown <= 0) {
+            location.reload(true);
+          }
+        } else {
+          countdown = 30;
+          updateCountdown();
         }
-      }, 30000);
+      }, 1000);
     }
 
     checkbox.addEventListener("change", () => {
       localStorage.setItem(refreshKey, checkbox.checked);
+      countdown = 30;
+      updateCountdown();
     });
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -248,9 +269,7 @@
       document.getElementById("sweepButton").addEventListener("click", sweepRoad);
       updateDisplay();
 
-      // Restore checkbox state
-      const saved = localStorage.getItem(refreshKey);
-      checkbox.checked = saved === "true";
+      checkbox.checked = localStorage.getItem(refreshKey) === "true";
       startAutoRefresh();
     });
   </script>
