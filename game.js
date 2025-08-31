@@ -95,6 +95,18 @@ function maxResources() {
   updateWalletUpgradeButton();
 }
 
+function updateGameState() {
+  updateDisplay();
+  updateWalletUpgradeButton();
+  saveResources();
+}
+
+function updateWalletUpgradeButton() {
+  const button = document.getElementById("walletUpgradeButton");
+  button.disabled = gold < goldMax;
+  button.textContent = `Bigger Wallet (Cost: ${goldMax})`;
+}
+
 function logState() {
   console.log("Energy:", energy);
   console.log("Gold:", gold);
@@ -184,7 +196,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   loadGameState();
   startAutoRefresh();
-  updateDisplay();
-  updateWalletUpgradeButton();
+  updateGameState()
   setTimeout(setUniformButtonWidthPerTab, 0);
 });
