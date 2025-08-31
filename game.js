@@ -58,8 +58,15 @@ document.querySelectorAll('.tabButton').forEach(button => {
     document.querySelectorAll('.tabContent').forEach(content => content.classList.remove('active'));
     const tabId = button.dataset.tab + 'Tab';
     document.getElementById(tabId).classList.add('active');
+
+    // Save the active tab to localStorage
+    localStorage.setItem("activeTab", button.dataset.tab);
+
+    // Recalculate button widths for the newly visible tab
+    setUniformButtonWidthPerTab();
   });
 });
+
 
 // Auto-refresh logic
 const checkbox = document.getElementById("autoRefreshCheckbox");
@@ -113,12 +120,23 @@ function setUniformButtonWidthPerTab() {
 
 // DOM setup
 document.addEventListener("DOMContentLoaded", () => {
+  // Restore last active tab
+  const savedTab = localStorage.getItem("activeTab") || "actions";
+  document.querySelectorAll('.tabButton').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.tab === savedTab);
+  });
+  document.querySelectorAll('.tabContent').forEach(content => {
+    content.classList.toggle('active', content.id === savedTab + "Tab");
+  });
+
+  // Set up buttons
   document.getElementById("restButton").addEventListener("click", gainEnergy);
   document.getElementById("sweepButton").addEventListener("click", sweepRoad);
   document.getElementById("walletUpgradeButton").addEventListener("click", buyBiggerWallet);
 
   updateDisplay();
   updateWalletUpgradeButton(); // ← this must run BEFORE width calculation
+  setTimeout(setUniformButtonWidthPerTab, 0);
   setUniformButtonWidthPerTab(); // ← now recalculates widths after label update
   checkbox.checked = localStorage.getItem(refreshKey) === "true";
   startAutoRefresh();
