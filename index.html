@@ -15,12 +15,15 @@
     </div>
     <div id="topRight">
       <div id="versionTag">
-        <label id="refreshToggle">
-          Auto-Refresh (<span id="refreshCountdown">30</span>)
-          <input type="checkbox" id="autoRefreshCheckbox" />
+        <label for="autoRefreshCheckbox" id="refreshToggle">
+          Auto-Refresh (<span id="refreshCountdown">10</span>)
         </label>
-        v0.0.5
-        <input type="checkbox" id="debugToggle" />
+        <input type="checkbox" id="autoRefreshCheckbox" title="Enable auto-refresh" />
+
+        <label for="debugToggle" style="margin-left: 12px;">Debug Mode</label>
+        <input type="checkbox" id="debugToggle" title="Enable debug tab" />
+        
+        <span style="margin-left: 12px;">v0.0.5</span>
       </div>
     </div>
   </div>
@@ -31,7 +34,7 @@
       <button class="tabButton" data-tab="upgrades">Upgrades</button>
       <button class="tabButton" data-tab="mystery1">????</button>
       <button class="tabButton" data-tab="mystery2">????</button>
-      <button class="tabButton" data-tab="debug" id="debugTabButton" style="display: none;">Debug</button>
+      <button class="tabButton hidden" data-tab="debug" id="debugTabButton">Debug</button>
     </div>
 
     <div class="tabContent active" id="actionsTab">
@@ -45,12 +48,12 @@
 
     <div class="tabContent" id="mystery1Tab"></div>
     <div class="tabContent" id="mystery2Tab"></div>
-  </div>
 
-  <div class="tabContent" id="debugTab">
-    <button onclick="resetResources()" class="actionButton">Reset Resources</button>
-    <button onclick="maxResources()" class="actionButton">Max Resources</button>
-    <button onclick="logState()" class="actionButton">Log State</button>
+    <div class="tabContent" id="debugTab">
+      <button onclick="resetResources()" class="actionButton">Reset Resources</button>
+      <button onclick="maxResources()" class="actionButton">Max Resources</button>
+      <button onclick="logState()" class="actionButton">Log State</button>
+    </div>
   </div>
 
   <div id="resourcePanel">
