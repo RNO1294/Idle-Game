@@ -164,8 +164,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const debugTabButton = document.getElementById("debugTabButton");
     const isChecked = e.target.checked;
     localStorage.setItem("devModeEnabled", isChecked);
-    debugTabButton.style.display = isChecked ? "inline-block" : "none";
+
+    if (isChecked) {
+      debugTabButton.classList.remove("hidden");
+    } else {
+      debugTabButton.classList.add("hidden");
+    }
   });
+
+  const devModeEnabled = localStorage.getItem("devModeEnabled") === "true";
+  document.getElementById("debugToggle").checked = devModeEnabled;
+
+  const debugTabButton = document.getElementById("debugTabButton");
+  if (devModeEnabled) {
+    debugTabButton.classList.remove("hidden");
+  } else {
+    debugTabButton.classList.add("hidden");
+  }
 
   autoRefreshCheckbox.checked = localStorage.getItem(refreshKey) === "true";
 
