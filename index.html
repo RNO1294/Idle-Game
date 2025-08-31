@@ -15,37 +15,49 @@
       flex-direction: column;
     }
 
-    #versionTag {
+    /* Floating top panel */
+    #topPanel {
       position: fixed;
-      top: 10px;
-      right: 12px;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #1c1c1c;
+      border-bottom: 1px solid #333;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+      z-index: 1000;
+    }
+
+    #topPanel h1 {
+      margin: 0;
+      font-size: 20px;
+      color: #90caf9;
+    }
+
+    #versionTag {
       font-size: 12px;
       color: #b0bec5;
       opacity: 0.6;
       pointer-events: none;
-      z-index: 1000;
     }
 
     @media (max-width: 600px) {
       #versionTag {
         font-size: 10px;
-        top: 8px;
-        right: 8px;
       }
     }
 
+    /* Main content area */
     .top-left {
+      margin-top: 70px; /* space below top panel */
       padding: 20px;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       gap: 12px;
-    }
-
-    h1 {
-      margin: 0;
-      color: #90caf9;
-      font-size: 24px;
     }
 
     button {
@@ -62,6 +74,7 @@
       background-color: #263238;
     }
 
+    /* Floating bottom panel */
     #energyPanel {
       position: fixed;
       bottom: 0;
@@ -77,13 +90,18 @@
   </style>
 </head>
 <body>
-  <div id="versionTag">v1.0.0</div>
-
-  <div class="top-left">
+  <!-- Floating top panel -->
+  <div id="topPanel">
     <h1>Welcome to Idle Game</h1>
+    <div id="versionTag">v1.0.0</div>
+  </div>
+
+  <!-- Main content -->
+  <div class="top-left">
     <button id="restButton">Rest</button>
   </div>
 
+  <!-- Floating bottom panel -->
   <div id="energyPanel">Energy: 0 / 10</div>
 
   <script>
