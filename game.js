@@ -88,6 +88,16 @@ function resetResources() {
   updateWalletUpgradeButton();
 }
 
+function resetUpgrades() {
+  energyMax = 10;
+  goldMax = 10;
+  // reset other upgrade flags here
+  saveResources();
+  updateDisplay();
+  updateWalletUpgradeButton();
+  console.log("All upgrades reset.");
+}
+
 function maxResources() {
   energy = energyMax;
   gold = goldMax;
