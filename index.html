@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome to Idle Game</title>
+  <title>Idle Game</title>
   <style>
     body {
       margin: 0;
@@ -24,6 +24,14 @@
       opacity: 0.6;
       pointer-events: none;
       z-index: 1000;
+    }
+
+    @media (max-width: 600px) {
+      #versionTag {
+        font-size: 10px;
+        top: 8px;
+        right: 8px;
+      }
     }
 
     .top-left {
@@ -100,57 +108,5 @@
       updateDisplay();
     });
   </script>
-</body>
-</html>
-      font-size: 18px;
-    }
-    #versionTag {
-      position: absolute;
-      top: 10px;
-      right: 12px;
-      font-size: 12px;
-      color: #b0bec5;
-      opacity: 0.6;
-      pointer-events: none;
-    }
-    @media (max-width: 600px) {
-      #versionTag {
-        font-size: 10px;
-        top: 8px;
-        right: 8px;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div id="versionTag">v1.0.0</div>
-  <h1>Welcome to Idle Game</h1>
-  <button id="restButton">Rest</button>
-  <p id="energyDisplay">Energy: 0</p>
-
-<script>
-  let energy = 0;
-  let energyMax = 10; // You can change this later to scale difficulty or progression
-
-  function updateDisplay() {
-    document.getElementById("energyDisplay").textContent = `Energy: ${energy} / ${energyMax}`;
-  }
-
-  function gainEnergy() {
-    if (energy < energyMax) {
-      energy += 1;
-      updateDisplay();
-    } else {
-      // Optional: give feedback when energy is full
-      console.log("Energy is full!");
-    }
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("restButton").addEventListener("click", gainEnergy);
-    updateDisplay();
-  });
-</script>
-
 </body>
 </html>
