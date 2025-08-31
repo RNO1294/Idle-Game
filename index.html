@@ -220,7 +220,7 @@
       const btn = document.getElementById("walletUpgradeButton");
       btn.textContent = `Bigger Wallet (Cost: ${goldMax})`;
       btn.disabled = gold < goldMax;
-      setUniformButtonWidth(); // ensure width updates with label
+      setUniformButtonWidthPerTab(); // recalculate for upgrades tab
     }
 
 
@@ -269,18 +269,20 @@
     });
 
     // Uniform button width logic
-    function setUniformButtonWidth() {
-      const buttons = document.querySelectorAll(".actionButton");
-      let maxWidth = 0;
+    function setUniformButtonWidthPerTab() {
+      document.querySelectorAll(".tabContent").forEach(tab => {
+        const buttons = tab.querySelectorAll(".actionButton");
+        let maxWidth = 0;
 
-      buttons.forEach(btn => {
-        btn.style.width = "auto"; // reset before measuring
-        const width = btn.offsetWidth;
-        if (width > maxWidth) maxWidth = width;
-      });
+        buttons.forEach(btn => {
+          btn.style.width = "auto"; // reset before measuring
+          const width = btn.offsetWidth;
+          if (width > maxWidth) maxWidth = width;
+        });
 
-      buttons.forEach(btn => {
-        btn.style.width = `${maxWidth}px`;
+        buttons.forEach(btn => {
+          btn.style.width = `${maxWidth}px`;
+        });
       });
     }
 
@@ -294,7 +296,8 @@
       updateWalletUpgradeButton();
       checkbox.checked = localStorage.getItem(refreshKey) === "true";
       startAutoRefresh();
-      setUniformButtonWidth();
+      setUniformButtonWidthPerTab();
+
     });
   </script>
 </body>
