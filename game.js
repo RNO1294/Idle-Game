@@ -225,4 +225,8 @@ document.addEventListener("DOMContentLoaded", () => {
   startAutoRefresh();
   updateGameState()
   setTimeout(setUniformButtonWidthPerTab, 0);
+  setTimeout(() => {
+  document.getElementById("loadingOverlay").classList.add("hidden");
+}, 1000); // 1 second delay
+
 });
