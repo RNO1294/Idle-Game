@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Idle Game</title>
   <style>
-    html, body {
+    html,
+    body {
       margin: 0;
       padding: 0;
       font-family: system-ui, sans-serif;
@@ -17,7 +19,6 @@
       flex-direction: column;
     }
 
-    /* Top panel */
     #topPanel {
       background-color: #1c1c1c;
       border-bottom: 1px solid #333;
@@ -25,7 +26,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
     }
 
     #topLeft {
@@ -61,13 +62,6 @@
       gap: 6px;
     }
 
-    @media (max-width: 600px) {
-      #versionTag {
-        font-size: 10px;
-      }
-    }
-
-    /* Middle section with tabs */
     #middleSection {
       flex: 1;
       display: flex;
@@ -128,21 +122,20 @@
       background-color: #263238;
     }
 
-    /* Bottom panel */
     #resourcePanel {
       background-color: #1c1c1c;
       border-top: 1px solid #333;
       padding: 12px 20px;
       font-size: 16px;
       color: #90caf9;
-      box-shadow: 0 -2px 6px rgba(0,0,0,0.4);
+      box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.4);
       display: flex;
       justify-content: space-between;
     }
   </style>
 </head>
+
 <body>
-  <!-- Top panel -->
   <div id="topPanel">
     <div id="topLeft">
       <h1>Welcome to Idle Game</h1>
@@ -156,7 +149,6 @@
     </div>
   </div>
 
-  <!-- Middle section with tabs -->
   <div id="middleSection">
     <div class="tabBar">
       <button class="tabButton active" data-tab="actions">Actions</button>
@@ -171,24 +163,17 @@
     </div>
 
     <div class="tabContent" id="upgradesTab">
-      <!-- Upgrades content will go here -->
+      <button id="walletUpgradeButton" class="actionButton">Bigger Wallet (Cost: 10)</button>
     </div>
 
-    <div class="tabContent" id="mystery1Tab">
-      <!-- Placeholder mystery tab -->
-    </div>
-
-    <div class="tabContent" id="mystery2Tab">
-      <!-- Placeholder mystery tab -->
-    </div>
+    <div class="tabContent" id="mystery1Tab"></div>
+    <div class="tabContent" id="mystery2Tab"></div>
   </div>
 
-  <!-- Bottom panel -->
   <div id="resourcePanel">
     <div id="energyDisplay">Energy: 0 / 10</div>
     <div id="goldDisplay">Gold: 0 / 10</div>
   </div>
-
   <script>
     let energy = 0;
     let energyMax = 10;
@@ -214,6 +199,7 @@
         energy -= 1;
         gold += 1;
         updateDisplay();
+        updateWalletUpgradeButton();
       } else if (energy <= 0) {
         console.log("Not enough energy!");
       } else {
@@ -221,7 +207,22 @@
       }
     }
 
-    // Tab switching logic
+    function buyBiggerWallet() {
+      if (gold >= goldMax) {
+        gold -= goldMax;
+        goldMax = Math.floor(goldMax * 1.5);
+        updateDisplay();
+        updateWalletUpgradeButton();
+      }
+    }
+
+    function updateWalletUpgradeButton() {
+      const btn = document.getElementById("walletUpgradeButton");
+      btn.textContent = `Bigger Wallet (Cost: ${goldMax})`;
+      btn.disabled = gold < goldMax;
+    }
+
+    // Tab switching
     document.querySelectorAll('.tabButton').forEach(button => {
       button.addEventListener('click', () => {
         document.querySelectorAll('.tabButton').forEach(btn => btn.classList.remove('active'));
@@ -271,7 +272,7 @@
       let maxWidth = 0;
 
       buttons.forEach(btn => {
-        btn.style.width = "auto"; // reset
+        btn.style.width = "auto";
         const width = btn.offsetWidth;
         if (width > maxWidth) maxWidth = width;
       });
@@ -284,12 +285,15 @@
     document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("restButton").addEventListener("click", gainEnergy);
       document.getElementById("sweepButton").addEventListener("click", sweepRoad);
-      updateDisplay();
+      document.getElementById("walletUpgradeButton").addEventListener("click", buyBiggerWallet);
 
+      updateDisplay();
+      updateWalletUpgradeButton();
       checkbox.checked = localStorage.getItem(refreshKey) === "true";
       startAutoRefresh();
       setUniformButtonWidth();
     });
   </script>
 </body>
+
 </html>
