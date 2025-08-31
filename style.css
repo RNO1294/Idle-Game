@@ -49,6 +49,10 @@ body {
   gap: 6px;
 }
 
+.versionNumber {
+  margin-left: 12px;
+}
+
 @media (max-width: 600px) {
   #versionTag {
     font-size: 10px;
