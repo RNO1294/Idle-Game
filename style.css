@@ -115,6 +115,7 @@ body {
   border-radius: 8px;
   cursor: pointer;
   white-space: nowrap;
+  transition: width 0.2s ease;
 }
 
 .actionButton:hover {

@@ -43,8 +43,11 @@ function updateWalletUpgradeButton() {
   const btn = document.getElementById("walletUpgradeButton");
   btn.textContent = `Bigger Wallet (Cost: ${goldMax})`;
   btn.disabled = gold < goldMax;
-  setUniformButtonWidthPerTab();
+
+  // Delay width calculation until after label is rendered
+  setTimeout(setUniformButtonWidthPerTab, 0);
 }
+
 
 // Tab switching
 document.querySelectorAll('.tabButton').forEach(button => {
