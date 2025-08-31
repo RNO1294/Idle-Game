@@ -10,16 +10,36 @@
       font-family: system-ui, sans-serif;
       background-color: #121212;
       color: #e0e0e0;
+      height: 100vh;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
     }
+
+    #versionTag {
+      position: fixed;
+      top: 10px;
+      right: 12px;
+      font-size: 12px;
+      color: #b0bec5;
+      opacity: 0.6;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    .top-left {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
     h1 {
-      margin-bottom: 20px;
+      margin: 0;
       color: #90caf9;
+      font-size: 24px;
     }
+
     button {
       background-color: #1e1e1e;
       color: #ffffff;
@@ -28,12 +48,60 @@
       font-size: 16px;
       border-radius: 8px;
       cursor: pointer;
-      margin-bottom: 20px;
     }
+
     button:hover {
       background-color: #263238;
     }
-    p {
+
+    #energyPanel {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: #1c1c1c;
+      border-top: 1px solid #333;
+      padding: 12px 20px;
+      font-size: 18px;
+      color: #90caf9;
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.4);
+    }
+  </style>
+</head>
+<body>
+  <div id="versionTag">v1.0.0</div>
+
+  <div class="top-left">
+    <h1>Welcome to Idle Game</h1>
+    <button id="restButton">Rest</button>
+  </div>
+
+  <div id="energyPanel">Energy: 0 / 10</div>
+
+  <script>
+    let energy = 0;
+    let energyMax = 10;
+
+    function updateDisplay() {
+      document.getElementById("energyPanel").textContent = `Energy: ${energy} / ${energyMax}`;
+    }
+
+    function gainEnergy() {
+      if (energy < energyMax) {
+        energy += 1;
+        updateDisplay();
+      } else {
+        console.log("Energy is full!");
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("restButton").addEventListener("click", gainEnergy);
+      updateDisplay();
+    });
+  </script>
+</body>
+</html>
       font-size: 18px;
     }
     #versionTag {
