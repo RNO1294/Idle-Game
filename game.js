@@ -35,14 +35,15 @@ function loadGameState() {
   const debugTabButton = document.getElementById("debugTabButton");
 
   debugToggle.checked = devModeEnabled;
-  debugTabButton.style.display = devModeEnabled ? "inline-block" : "none";
+
+  if (devModeEnabled) {
+    debugTabButton.classList.remove("hidden");
+  } else {
+    debugTabButton.classList.add("hidden");
+  }
 
   const savedTab = localStorage.getItem("activeTab") || "actions";
-  if (devModeEnabled && savedTab === "debug") {
-    switchToTab("debug");
-  } else {
-    switchToTab(savedTab);
-  }
+  switchToTab(savedTab);
 }
 
 function rest() {
