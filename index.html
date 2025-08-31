@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Idle Game</title>
   <style>
-    html,
-    body {
+    html, body {
       margin: 0;
       padding: 0;
       font-family: system-ui, sans-serif;
@@ -27,7 +25,13 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+
+    #topLeft {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
     #topPanel h1 {
@@ -41,6 +45,17 @@
       color: #b0bec5;
       opacity: 0.6;
       pointer-events: none;
+    }
+
+    #refreshToggle {
+      display: flex;
+      align-items: center;
+      font-size: 12px;
+      color: #b0bec5;
+    }
+
+    #refreshToggle input {
+      margin-right: 6px;
     }
 
     @media (max-width: 600px) {
@@ -95,7 +110,6 @@
       display: flex;
     }
 
-    /* Buttons inside tabs */
     .actionButton {
       background-color: #1e1e1e;
       color: #ffffff;
@@ -117,17 +131,22 @@
       padding: 12px 20px;
       font-size: 16px;
       color: #90caf9;
-      box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.4);
       display: flex;
       justify-content: space-between;
     }
   </style>
 </head>
-
 <body>
   <!-- Top panel -->
   <div id="topPanel">
-    <h1>Welcome to Idle Game</h1>
+    <div id="topLeft">
+      <h1>Welcome to Idle Game</h1>
+      <label id="refreshToggle">
+        <input type="checkbox" id="autoRefreshCheckbox" />
+        Auto-refresh
+      </label>
+    </div>
     <div id="versionTag">v1.0.0</div>
   </div>
 
@@ -208,17 +227,32 @@
       });
     });
 
+    // Auto-refresh toggle logic
+    const checkbox = document.getElementById("autoRefreshCheckbox");
+    const refreshKey = "autoRefreshEnabled";
+
+    function startAutoRefresh() {
+      setInterval(() => {
+        if (localStorage.getItem(refreshKey) === "true") {
+          location.reload(true);
+        }
+      }, 30000);
+    }
+
+    checkbox.addEventListener("change", () => {
+      localStorage.setItem(refreshKey, checkbox.checked);
+    });
+
     document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("restButton").addEventListener("click", gainEnergy);
       document.getElementById("sweepButton").addEventListener("click", sweepRoad);
       updateDisplay();
+
+      // Restore checkbox state
+      const saved = localStorage.getItem(refreshKey);
+      checkbox.checked = saved === "true";
+      startAutoRefresh();
     });
-    
-    // REMOVE WHEN GAME FINISHED //
-    setTimeout(() => {
-      location.reload(true);
-    }, 30000);
   </script>
 </body>
-
 </html>
