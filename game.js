@@ -8,17 +8,50 @@ function updateDisplay() {
   document.getElementById("goldDisplay").textContent = `Gold: ${gold} / ${goldMax}`;
 }
 
+function loadGameState() {
+  loadResources();
+
+  const devModeEnabled = localStorage.getItem("devModeEnabled") === "true";
+  document.getElementById("debugToggle").checked = devModeEnabled;
+  const debugTabButton = document.getElementById("debugTabButton");
+  debugTabButton.style.display = devModeEnabled ? "inline-block" : "none";
+
+  const savedTab = localStorage.getItem("activeTab") || "actions";
+  if (devModeEnabled && savedTab === "debug") {
+    switchToTab("debug");
+  } else {
+    switchToTab(savedTab);
+  }
+
+const devModeEnabled = localStorage.getItem("devModeEnabled") === "true";
+document.getElementById("debugToggle").checked = devModeEnabled;
+const debugTabButton = document.getElementById("debugTabButton");
+debugTabButton.style.display = devModeEnabled ? "inline-block" : "none";
+
+}
+
+function saveGameState() {
+  saveResources();
+  // future: save upgrades, unlocks, etc.
+}
+
 function saveResources() {
   localStorage.setItem("energy", energy);
   localStorage.setItem("gold", gold);
+  localStorage.setItem("energyMax", energyMax);
+  localStorage.setItem("goldMax", goldMax);
 }
 
 function loadResources() {
   const savedEnergy = localStorage.getItem("energy");
   const savedGold = localStorage.getItem("gold");
+  const savedEnergyMax = localStorage.getItem("energyMax");
+  const savedGoldMax = localStorage.getItem("goldMax");
 
   energy = savedEnergy !== null ? parseInt(savedEnergy) : 0;
   gold = savedGold !== null ? parseInt(savedGold) : 0;
+  energyMax = savedEnergyMax !== null ? parseInt(savedEnergyMax) : 10;
+  goldMax = savedGoldMax !== null ? parseInt(savedGoldMax) : 10;
 }
 
 function rest() {
@@ -55,24 +88,23 @@ function buyBiggerWallet() {
   }
 }
 
+function switchToTab(tabName) {
+  document.querySelectorAll('.tabButton').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.tab === tabName);
+  });
+  document.querySelectorAll('.tabContent').forEach(content => {
+    content.classList.toggle('active', content.id === tabName + "Tab");
+  });
+  localStorage.setItem("activeTab", tabName);
+  setUniformButtonWidthPerTab();
+}
+
 // Tab switching
 document.querySelectorAll('.tabButton').forEach(button => {
   button.addEventListener('click', () => {
-    document.querySelectorAll('.tabButton').forEach(btn => btn.classList.remove('active'));
-    button.classList.add('active');
-
-    document.querySelectorAll('.tabContent').forEach(content => content.classList.remove('active'));
-    const tabId = button.dataset.tab + 'Tab';
-    document.getElementById(tabId).classList.add('active');
-
-    // Save the active tab to localStorage
-    localStorage.setItem("activeTab", button.dataset.tab);
-
-    // Recalculate button widths for the newly visible tab
-    setUniformButtonWidthPerTab();
+    switchToTab(button.dataset.tab);
   });
 });
-
 
 // Auto-refresh logic
 const autoRefreshCheckbox = document.getElementById("autoRefreshCheckbox");
@@ -106,12 +138,6 @@ function startAutoRefresh() {
   }, 1000);
 }
 
-autoRefreshCheckbox.addEventListener("change", () => {
-  localStorage.setItem(refreshKey, autoRefreshCheckbox.checked);
-  countdown = 30;
-  updateCountdown();
-});
-
 function resetResources() {
   energy = 0;
   gold = 0;
@@ -134,12 +160,6 @@ function logState() {
   console.log("GoldMax:", goldMax);
 }
 
-checkbox.addEventListener("change", () => {
-  localStorage.setItem(refreshKey, checkbox.checked);
-  countdown = 30;
-  updateCountdown();
-});
-
 // Per-tab button width logic
 function setUniformButtonWidthPerTab() {
   document.querySelectorAll(".tabContent").forEach(tab => {
@@ -158,24 +178,17 @@ function setUniformButtonWidthPerTab() {
   });
 }
 
-// Toggle styles
-panel.style.opacity = e.target.checked ? "1" : "0";
-panel.style.transform = e.target.checked ? "translateY(0)" : "translateY(-10px)";
-panel.style.display = e.target.checked ? "block" : "none";
-
 // DOM setup
 document.addEventListener("DOMContentLoaded", () => {
   // Restore last active tab
   const savedTab = localStorage.getItem("activeTab") || "actions";
-  document.querySelectorAll('.tabButton').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.tab === savedTab);
-  });
+
   document.querySelectorAll('.tabContent').forEach(content => {
     content.classList.toggle('active', content.id === savedTab + "Tab");
   });
 
-  // Load saved resources
-  loadResources();
+  // Load game state
+  loadGameState();
 
   // Set up buttons
   document.getElementById("restButton").addEventListener("click", rest);
@@ -185,11 +198,19 @@ document.addEventListener("DOMContentLoaded", () => {
   // Debug tab toggle
   document.getElementById("debugToggle").addEventListener("change", (e) => {
     const debugTabButton = document.getElementById("debugTabButton");
+    const isChecked = e.target.checked;
+
+    localStorage.setItem("devModeEnabled", isChecked);
     debugTabButton.style.display = e.target.checked ? "inline-block" : "none";
-    if (e.target.checked) {
-      debugTabButton.click();
+
+    if (isChecked) {
+      switchToTab("debug");
     }
   });
+
+  if (devModeEnabled && savedTab === "debug") {
+    switchToTab("debug");
+  }
 
   // Auto-refresh setup
   autoRefreshCheckbox.checked = localStorage.getItem(refreshKey) === "true";
@@ -198,9 +219,4 @@ document.addEventListener("DOMContentLoaded", () => {
   updateDisplay();
   updateWalletUpgradeButton();
   setTimeout(setUniformButtonWidthPerTab, 0);
-  setUniformButtonWidthPerTab();
 });
-
-
-
-

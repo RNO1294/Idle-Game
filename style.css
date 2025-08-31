@@ -131,7 +131,7 @@ body {
     border-radius: 8px;
     cursor: pointer;
     white-space: nowrap;
-    transition: width 0.2s ease;
+    transition: width 0.2s ease, background-color 0.2s ease;
 }
 
 .actionButton:hover {
@@ -149,26 +149,6 @@ body {
     justify-content: space-between;
 }
 
-#debugPanel {
-    position: fixed;
-    top: 60px;
-    right: 20px;
-    background-color: #1c1c1c;
-    border: 1px solid #333;
-    padding: 16px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    display: none;
-    width: 240px;
-    color: #e0e0e0;
-    transition: opacity 0.2s ease, transform 0.2s ease;
-    opacity: 0;
-    transform: translateY(-10px);
-}
-
-#debugPanel h3 {
-    margin-top: 0;
-    font-size: 14px;
-    color: #90caf9;
+.hidden {
+  display: none !important;
 }
