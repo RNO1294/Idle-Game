@@ -31,11 +31,7 @@
       <button class="tabButton" data-tab="upgrades">Upgrades</button>
       <button class="tabButton" data-tab="mystery1">????</button>
       <button class="tabButton" data-tab="mystery2">????</button>
-      <div class="tabContent" id="debugTab">
-        <button onclick="resetResources()" class="actionButton">Reset Resources</button>
-        <button onclick="maxResources()" class="actionButton">Max Resources</button>
-        <button onclick="logState()" class="actionButton">Log State</button>
-      </div>
+      <button class="tabButton" data-tab="debug" id="debugTabButton" style="display: none;">Debug</button>
     </div>
 
     <div class="tabContent active" id="actionsTab">
@@ -51,15 +47,15 @@
     <div class="tabContent" id="mystery2Tab"></div>
   </div>
 
+  <div class="tabContent" id="debugTab">
+    <button onclick="resetResources()" class="actionButton">Reset Resources</button>
+    <button onclick="maxResources()" class="actionButton">Max Resources</button>
+    <button onclick="logState()" class="actionButton">Log State</button>
+  </div>
+
   <div id="resourcePanel">
     <div id="energyDisplay">Energy: 0 / 10</div>
     <div id="goldDisplay">Gold: 0 / 10</div>
-  </div>
-
-  <div id="debugPanel">
-    <h3>Debug Tools</h3>
-    <button onclick="resetResources()" class="actionButton">Reset Resources</button>
-    <button onclick="logState()" class="actionButton">Log State</button>
   </div>
 
   <script src="game.js"></script>
