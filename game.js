@@ -115,8 +115,8 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("walletUpgradeButton").addEventListener("click", buyBiggerWallet);
 
   updateDisplay();
-  updateWalletUpgradeButton();
+  updateWalletUpgradeButton(); // ← this must run BEFORE width calculation
   checkbox.checked = localStorage.getItem(refreshKey) === "true";
   startAutoRefresh();
-  setUniformButtonWidthPerTab();
 });
+
