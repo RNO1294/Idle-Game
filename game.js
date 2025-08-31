@@ -116,7 +116,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   updateDisplay();
   updateWalletUpgradeButton(); // ← this must run BEFORE width calculation
+  setUniformButtonWidthPerTab(); // ← now recalculates widths after label update
   checkbox.checked = localStorage.getItem(refreshKey) === "true";
   startAutoRefresh();
 });
+
 
