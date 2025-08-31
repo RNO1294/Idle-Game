@@ -107,21 +107,15 @@ body {
   gap: 12px;
   flex-wrap: wrap;
   align-items: flex-start;
-  opacity: 0;
-  transform: translateX(20px);
-  transition: opacity 0.2s ease, transform 0.2s ease;
   pointer-events: none;
   z-index: 0;
 }
 
 .tabContent.active {
-  opacity: 1;
-  transform: translateX(0);
   pointer-events: auto;
   position: relative;
   z-index: 1;
 }
-
 
 .actionButton {
     background-color: #1e1e1e;

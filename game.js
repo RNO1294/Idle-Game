@@ -165,7 +165,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const isChecked = e.target.checked;
     localStorage.setItem("devModeEnabled", isChecked);
     debugTabButton.style.display = isChecked ? "inline-block" : "none";
-    if (isChecked) switchToTab("debug");
   });
 
   autoRefreshCheckbox.checked = localStorage.getItem(refreshKey) === "true";
