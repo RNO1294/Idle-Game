@@ -18,7 +18,10 @@
         Auto-refresh (<span id="refreshCountdown">30</span>)
         <input type="checkbox" id="autoRefreshCheckbox" />
       </label>
-      <div id="versionTag">v0.0.4</div>
+      <div id="versionTag">
+        v0.0.4
+        <input type="checkbox" id="debugToggle" />
+      </div>
     </div>
   </div>
 
@@ -47,6 +50,14 @@
     <div id="energyDisplay">Energy: 0 / 10</div>
     <div id="goldDisplay">Gold: 0 / 10</div>
   </div>
-    <script src="game.js"></script>
+
+  <div id="debugPanel">
+    <h3>Debug Tools</h3>
+    <button onclick="resetResources()" class="actionButton">Reset Resources</button>
+    <button onclick="logState()" class="actionButton">Log State</button>
+  </div>
+
+  <script src="game.js"></script>
 </body>
+
 </html>

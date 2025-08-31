@@ -100,6 +100,20 @@ function startAutoRefresh() {
   }, 1000);
 }
 
+function resetResources() {
+  energy = 0;
+  gold = 0;
+  saveResources();
+  updateDisplay();
+  updateWalletUpgradeButton();
+}
+
+function logState() {
+  console.log("Energy:", energy);
+  console.log("Gold:", gold);
+  console.log("GoldMax:", goldMax);
+}
+
 checkbox.addEventListener("change", () => {
   localStorage.setItem(refreshKey, checkbox.checked);
   countdown = 30;
@@ -124,6 +138,11 @@ function setUniformButtonWidthPerTab() {
   });
 }
 
+// Toggle styles
+panel.style.opacity = e.target.checked ? "1" : "0";
+panel.style.transform = e.target.checked ? "translateY(0)" : "translateY(-10px)";
+panel.style.display = e.target.checked ? "block" : "none";
+
 // DOM setup
 document.addEventListener("DOMContentLoaded", () => {
   // Restore last active tab
@@ -142,6 +161,10 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("restButton").addEventListener("click", rest);
   document.getElementById("sweepButton").addEventListener("click", sweepRoad);
   document.getElementById("walletUpgradeButton").addEventListener("click", buyBiggerWallet);
+  document.getElementById("debugToggle").addEventListener("change", (e) => {
+    const panel = document.getElementById("debugPanel");
+    panel.style.display = e.target.checked ? "block" : "none";
+  });
 
   updateDisplay();
   updateWalletUpgradeButton(); // ← this must run BEFORE width calculation
