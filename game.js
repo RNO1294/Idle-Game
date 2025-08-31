@@ -75,10 +75,16 @@ document.querySelectorAll('.tabButton').forEach(button => {
 
 
 // Auto-refresh logic
-const checkbox = document.getElementById("autoRefreshCheckbox");
+const autoRefreshCheckbox = document.getElementById("autoRefreshCheckbox");
 const countdownDisplay = document.getElementById("refreshCountdown");
 const refreshKey = "autoRefreshEnabled";
 let countdown = 30;
+
+autoRefreshCheckbox.addEventListener("change", () => {
+  localStorage.setItem(refreshKey, autoRefreshCheckbox.checked);
+  countdown = 30;
+  updateCountdown();
+});
 
 function updateCountdown() {
   countdownDisplay.textContent = countdown;
@@ -99,6 +105,12 @@ function startAutoRefresh() {
     }
   }, 1000);
 }
+
+checkbox.addEventListener("change", () => {
+  localStorage.setItem(refreshKey, checkbox.checked);
+  countdown = 30;
+  updateCountdown();
+});}
 
 function resetResources() {
   energy = 0;
@@ -169,22 +181,26 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("restButton").addEventListener("click", rest);
   document.getElementById("sweepButton").addEventListener("click", sweepRoad);
   document.getElementById("walletUpgradeButton").addEventListener("click", buyBiggerWallet);
+
+  // Debug tab toggle
   document.getElementById("debugToggle").addEventListener("change", (e) => {
     const debugTabButton = document.getElementById("debugTabButton");
     debugTabButton.style.display = e.target.checked ? "inline-block" : "none";
-    // Optional: auto-switch to debug tab when enabled
     if (e.target.checked) {
       debugTabButton.click();
     }
   });
 
-  updateDisplay();
-  updateWalletUpgradeButton(); // ← this must run BEFORE width calculation
-  setTimeout(setUniformButtonWidthPerTab, 0);
-  setUniformButtonWidthPerTab(); // ← now recalculates widths after label update
-  checkbox.checked = localStorage.getItem(refreshKey) === "true";
+  // Auto-refresh setup
+  autoRefreshCheckbox.checked = localStorage.getItem(refreshKey) === "true";
   startAutoRefresh();
+
+  updateDisplay();
+  updateWalletUpgradeButton();
+  setTimeout(setUniformButtonWidthPerTab, 0);
+  setUniformButtonWidthPerTab();
 });
+
 
 
 
