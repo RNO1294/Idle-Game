@@ -121,6 +121,7 @@
       font-size: 16px;
       border-radius: 8px;
       cursor: pointer;
+      white-space: nowrap;
     }
 
     .actionButton:hover {
@@ -226,52 +227,4 @@
         document.querySelectorAll('.tabButton').forEach(btn => btn.classList.remove('active'));
         button.classList.add('active');
 
-        document.querySelectorAll('.tabContent').forEach(content => content.classList.remove('active'));
-        const tabId = button.dataset.tab + 'Tab';
-        document.getElementById(tabId).classList.add('active');
-      });
-    });
-
-    // Auto-refresh logic
-    const checkbox = document.getElementById("autoRefreshCheckbox");
-    const countdownDisplay = document.getElementById("refreshCountdown");
-    const refreshKey = "autoRefreshEnabled";
-    let countdown = 30;
-
-    function updateCountdown() {
-      countdownDisplay.textContent = countdown;
-    }
-
-    function startAutoRefresh() {
-      updateCountdown();
-      setInterval(() => {
-        if (localStorage.getItem(refreshKey) === "true") {
-          countdown--;
-          updateCountdown();
-          if (countdown <= 0) {
-            location.reload(true);
-          }
-        } else {
-          countdown = 30;
-          updateCountdown();
-        }
-      }, 1000);
-    }
-
-    checkbox.addEventListener("change", () => {
-      localStorage.setItem(refreshKey, checkbox.checked);
-      countdown = 30;
-      updateCountdown();
-    });
-
-    document.addEventListener("DOMContentLoaded", () => {
-      document.getElementById("restButton").addEventListener("click", gainEnergy);
-      document.getElementById("sweepButton").addEventListener("click", sweepRoad);
-      updateDisplay();
-
-      checkbox.checked = localStorage.getItem(refreshKey) === "true";
-      startAutoRefresh();
-    });
-  </script>
-</body>
-</html>
+        document.querySelectorAll('.tabContent').
