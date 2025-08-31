@@ -103,9 +103,11 @@ function updateGameState() {
 
 function updateWalletUpgradeButton() {
   const button = document.getElementById("walletUpgradeButton");
+  if (!button) return; // Prevent crash if button isn't in the DOM
   button.disabled = gold < goldMax;
   button.textContent = `Bigger Wallet (Cost: ${goldMax})`;
 }
+
 
 function logState() {
   console.log("Energy:", energy);
