@@ -108,6 +108,14 @@ function resetResources() {
   updateWalletUpgradeButton();
 }
 
+function maxResources() {
+  energy = energyMax;
+  gold = goldMax;
+  saveResources();
+  updateDisplay();
+  updateWalletUpgradeButton();
+}
+
 function logState() {
   console.log("Energy:", energy);
   console.log("Gold:", gold);
@@ -162,8 +170,12 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("sweepButton").addEventListener("click", sweepRoad);
   document.getElementById("walletUpgradeButton").addEventListener("click", buyBiggerWallet);
   document.getElementById("debugToggle").addEventListener("change", (e) => {
-    const panel = document.getElementById("debugPanel");
-    panel.style.display = e.target.checked ? "block" : "none";
+    const debugTabButton = document.getElementById("debugTabButton");
+    debugTabButton.style.display = e.target.checked ? "inline-block" : "none";
+    // Optional: auto-switch to debug tab when enabled
+    if (e.target.checked) {
+      debugTabButton.click();
+    }
   });
 
   updateDisplay();
