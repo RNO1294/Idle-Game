@@ -8,9 +8,23 @@ function updateDisplay() {
   document.getElementById("goldDisplay").textContent = `Gold: ${gold} / ${goldMax}`;
 }
 
-function gainEnergy() {
+function saveResources() {
+  localStorage.setItem("energy", energy);
+  localStorage.setItem("gold", gold);
+}
+
+function loadResources() {
+  const savedEnergy = localStorage.getItem("energy");
+  const savedGold = localStorage.getItem("gold");
+
+  energy = savedEnergy !== null ? parseInt(savedEnergy) : 0;
+  gold = savedGold !== null ? parseInt(savedGold) : 0;
+}
+
+function rest() {
   if (energy < energyMax) {
     energy += 1;
+    saveResources();
     updateDisplay();
   } else {
     console.log("Energy is full!");
@@ -21,6 +35,7 @@ function sweepRoad() {
   if (energy > 0 && gold < goldMax) {
     energy -= 1;
     gold += 1;
+    saveResources();
     updateDisplay();
     updateWalletUpgradeButton();
   } else if (energy <= 0) {
@@ -34,20 +49,11 @@ function buyBiggerWallet() {
   if (gold >= goldMax) {
     gold -= goldMax;
     goldMax = Math.floor(goldMax * 1.5);
+    saveResources();
     updateDisplay();
     updateWalletUpgradeButton();
   }
 }
-
-function updateWalletUpgradeButton() {
-  const btn = document.getElementById("walletUpgradeButton");
-  btn.textContent = `Bigger Wallet (Cost: ${goldMax})`;
-  btn.disabled = gold < goldMax;
-
-  // Delay width calculation until after label is rendered
-  setTimeout(setUniformButtonWidthPerTab, 0);
-}
-
 
 // Tab switching
 document.querySelectorAll('.tabButton').forEach(button => {
@@ -129,8 +135,11 @@ document.addEventListener("DOMContentLoaded", () => {
     content.classList.toggle('active', content.id === savedTab + "Tab");
   });
 
+  // Load saved resources
+  loadResources();
+
   // Set up buttons
-  document.getElementById("restButton").addEventListener("click", gainEnergy);
+  document.getElementById("restButton").addEventListener("click", rest);
   document.getElementById("sweepButton").addEventListener("click", sweepRoad);
   document.getElementById("walletUpgradeButton").addEventListener("click", buyBiggerWallet);
 
@@ -141,5 +150,6 @@ document.addEventListener("DOMContentLoaded", () => {
   checkbox.checked = localStorage.getItem(refreshKey) === "true";
   startAutoRefresh();
 });
+
 
 
